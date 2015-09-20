@@ -1,8 +1,10 @@
 {
   "name": "overpass",
   "dependencies": {
+    "bootstrap": "~3.3.5",
     "extjs": "~6.0.0-640",
     "jquery": "~2.1.4",
+    "json-editor": "~0.7.22",
     "pure": "~0.6.0"
   }
 }
