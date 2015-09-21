@@ -24,13 +24,9 @@ module.exports = function (app,db) {
 
                 console.log('   %s %s',method.toUpperCase(),url);
 
-                //app.get('/ha',function(req,res){
-                //    res.send('haha');
-                //})
-
-                //app[method](url,function(req,res,next){
-                //    res.send('haha');
-                //})
+                app[method](url,function(req,res,next){
+                    res.send('haha');
+                })
 
             }
 

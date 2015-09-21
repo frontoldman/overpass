@@ -61,6 +61,10 @@ app.use(function (err, req, res, next) {
 
 //404
 app.use(function (req, res, next) {
+    var path = req.path;
+    if(path.indexOf('overpass/fake') > -1){
+        return next();
+    }
     res.status(404).render('404', {url: req.originalUrl});
 });
 
