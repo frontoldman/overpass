@@ -1,32 +1,86 @@
 (function(window,document){
     // create the editor
-    var container = document.getElementById("jsoneditor");
-    container.style.height = window.innerHeight + 'px';
+    var editor = initEditor();
 
-    var editor = new JSONEditor(container);
+    //初始化json编辑器
+    function initEditor(){
+        var container = document.getElementById("jsoneditor");
+        var topActionHeight = $('.top-action').height();
+        container.style.height = (window.innerHeight - topActionHeight) + 'px';
 
-    // set json
-    var json = {
-        "Array": [1, 2, 3],
-        "Boolean": true,
-        "Null": null,
-        "Number": 123,
-        "Object": {"a": "b", "c": "d"},
-        "String": "Hello World"
-    };
-    editor.set(json);
+        var editor = new JSONEditor(container);
 
-    // get json
-    var json = editor.get();
+        // set json
+        var json = {
+            '公司列表':{
+                url:'api/v1/x',
+                description:'公司列表',
+                method:'GET',
+                params:{
+                    'name':{
+                        type:'Int',
+                        default:1,
+                        isNull:true
+                    },
+                    'age':{
+                        type:'String',
+                        default : '',
+                        isNull : false
+                    }
+                },
+                returnValue:{
+                    type:'json',
+                    value:{
+                        code:{
+                            type:'Int',
+                            description:'错误码'
+                        },
+                        data:{
+                            type:'Array',
+                            description:'公司列表',
+                            listValue:{
+                                type:'Object',
+                                description:'单条列表值',
+                                value:{
+                                    name:{
+                                        type:'String',
+                                        description:'公司名称',
+                                        size:'5-10'
+                                    },
+                                    status:{
+                                        type:'Enum',
+                                        description:'公司状态,1:开张，2:倒闭，3:Z轮，4:W轮',
+                                        size:[1,2,3,4]
+                                    }
+                                }
+                            }
+                        },
+                        totalPage:{
+                            type:'Int',
+                            description:'总页数'
+                        }
 
-    var modes = ['tree','text'];
-    var mode = 0;
+                    }
+                }
+            }
+        };
 
-    var changeMode = document.getElementById('changeMode');
-    changeMode.onclick = function(){
-        mode = ++mode%modes.length;
-        console.log(mode);
-        editor.setMode(modes[mode]);
+        editor.set(json);
+
+        //['tree','code', 'form', 'text', 'view']
+        var modes = ['tree','code','text'],
+            mode = 0,
+            changeMode = document.getElementById('changeMode');
+
+        changeMode.onclick = function(){
+            mode = ++mode%modes.length;
+            console.log(modes[mode]);
+            editor.setMode(modes[mode]);
+        };
+
+        return editor;
     }
+
+
 
 })(window,document)

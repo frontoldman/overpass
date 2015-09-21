@@ -6,7 +6,8 @@
  *  引入Module
   * @type {*|exports|module.exports}
  */
-var express = require('express');
+var express    = require('express');
+var initModule = require('./includes/init');
 
 //创建实例应用
 var app = express();
@@ -33,6 +34,8 @@ app.use(function(err, req, res, next){
 app.use(function(req, res, next){
     res.status(404).render('404', { url: req.originalUrl });
 });
+
+initModule(app);
 
 /* istanbul ignore next */
 if (!module.parent) {

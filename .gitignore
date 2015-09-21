@@ -6,6 +6,7 @@
 *.iml
 node_modules
 bower_components
+document
 out
 gen
 # Created by .ignore support plugin (hsz.mobi)
