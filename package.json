@@ -1,10 +1,14 @@
 {
   "name": "overpass",
   "version": "0.0.1",
+  "description": "用文档沟通前后端",
+  "repository": "git@github.com:frontoldman/overpass.git",
   "license": "MIT",
   "dependencies": {
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "express-session": "^1.11.3",
+    "morgan": "^1.6.1",
     "q": "^1.4.1"
   }
 }

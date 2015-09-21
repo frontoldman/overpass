@@ -6,7 +6,9 @@
  *  引入Module
   * @type {*|exports|module.exports}
  */
-var express    = require('express');
+var    express = require('express');
+var     logger = require('morgan');
+var    session = require('express-session');
 var initModule = require('./includes/init');
 
 //创建实例应用
@@ -15,6 +17,20 @@ var app = express();
 //设置模版引擎
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
+
+
+app.response.message = function(msg){
+    // 引用session
+    var sess = this.req.session;
+    // simply add the msg to an array for later
+    sess.messages = sess.messages || [];
+    sess.messages.push(msg);
+    return this;
+};
+
+
+//日志
+if (!module.parent) app.use(logger('dev'));
 
 //静态资源目录
 app.use(express.static(__dirname + '/public'));
