@@ -26,7 +26,7 @@ module.exports = function(parent,config){
         var path;
 
         if (controller.engine) app.set('view engine', controller.engine);
-        app.set('views', __dirname + './controllers/' + name + '/views');
+        app.set('views', __dirname + '/' + name + '/views');
 
         for (var key in controller) {
             // "reserved" exports

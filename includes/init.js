@@ -9,7 +9,9 @@ var              Db = require('./db/');
 var bootControllers = require('./controllers/boot');
 
 function init(app) {
+
     var db = new Db(config);
+
     bootControllers(app,config);
 
     //db.getDb()
@@ -22,6 +24,8 @@ function init(app) {
     //    .fail(function (error) {
     //        console.error(error);
     //    })
+
+    global.db = db;
 
 }
 
