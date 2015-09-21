@@ -1,7 +1,9 @@
 (function (window, document) {
     // create the editor
-    var editor = initEditor();
-    initSave(editor);
+    var app = window.app || {};
+
+    initEditor();
+    initSave();
 
     //初始化json编辑器
     function initEditor() {
@@ -29,7 +31,9 @@
             editor.set(data);
         });
 
-        return editor;
+
+        app.editor = editor;
+        //return editor;
     }
 
     //获取数据
@@ -40,13 +44,16 @@
         })
     }
 
-    function initSave(editor) {
+    function initSave() {
+        var editor = app.editor;
         var $saveBtn = $('#save');
         $saveBtn.on('click', function () {
             var jsonData = editor.get();
             store(jsonData)
                 .done(function (data) {
-                    console.log(data);
+                    if(data.code == 1000){
+                        alert('保存成功');
+                    }
                 })
         });
 

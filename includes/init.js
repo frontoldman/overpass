@@ -7,6 +7,7 @@ var            path = require('path');
 var          config = require('../config');
 var              Db = require('./db/');
 var bootControllers = require('./controllers/boot');
+var   dynamicRouter = require('./dynamicRouter/index');
 
 function init(app) {
 
@@ -14,16 +15,7 @@ function init(app) {
 
     bootControllers(app,config);
 
-    //db.getDb()
-    //    .then(function (data) {
-    //        return JSON.parse(data);
-    //    })
-    //    .then(function (data) {
-    //
-    //    })
-    //    .fail(function (error) {
-    //        console.error(error);
-    //    })
+    dynamicRouter(app,db);
 
     global.db = db;
 

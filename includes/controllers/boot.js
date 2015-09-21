@@ -6,7 +6,7 @@ var express = require('express');
 var      fs = require('fs');
 
 
-module.exports = function(parent,config){
+module.exports = function(parent){
 
     fs.readdirSync(__dirname).forEach(function(name){
         //忽略boot.js
