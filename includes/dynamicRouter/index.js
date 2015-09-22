@@ -3,32 +3,47 @@
  */
 var path = require('path');
 
-module.exports = function (app,db) {
+module.exports = function (app, db) {
 
+    app.all('/fake/*', function (req, res, next) {
+        var body = req.body;
+        var url = req.params[0];
+        var query = req.query;
+        var method = req.method;
 
-    db.getAll()
-        .then(function (data) {
+        //读取文档
+        db.getAll()
+            .then(dealJsonData);
+
+        //处理文档数据
+        function dealJsonData(data){
             var jsonData = JSON.parse(data);
 
-            for(var key in jsonData){
-
-                console.log(key);
-
+            for (var key in jsonData) {
                 var apiObj = jsonData[key];
-
-                var url = apiObj.url || '';
-                var method = apiObj.method || 'get';
-
-                url = path.join('/overpass/fake/' + url);
-                method = method.toLowerCase();
-
-                console.log('   %s %s',method.toUpperCase(),url);
-
-                app[method](url,function(req,res,next){
-                    res.send('haha');
-                })
-
+                if (apiObj.method.toLowerCase() === method.toLowerCase()
+                    && apiObj.url.toLowerCase() === url.toLowerCase()) {
+                    var generateValue = generateData(apiObj.returnValue);
+                    return res.send(generateValue);
+                }
             }
 
-        })
+            next();
+        }
+
+        //生成返回值
+        function generateData(value){
+            var data;
+            switch(value.type){
+                case 'json':
+                    data = {};
+                    break;
+            }
+
+            return data;
+        }
+
+    });
+
+
 };
