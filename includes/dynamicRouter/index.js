@@ -2,6 +2,7 @@
  * Created by zhangran on 15/9/22.
  */
 var path = require('path');
+var Mock = require('mockjs');
 
 module.exports = function (app, db) {
 
@@ -16,7 +17,7 @@ module.exports = function (app, db) {
             .then(dealJsonData);
 
         //处理文档数据
-        function dealJsonData(data){
+        function dealJsonData(data) {
             var jsonData = JSON.parse(data);
 
             for (var key in jsonData) {
@@ -32,12 +33,35 @@ module.exports = function (app, db) {
         }
 
         //生成返回值
-        function generateData(value){
+        function generateData(returnValue) {
             var data;
-            switch(value.type){
+            switch (returnValue.type.toLowerCase()) {
+                case 'object':
                 case 'json':
                     data = {};
+                    var value = returnValue.value;
+                    for (var key in value) {
+                        if (value.hasOwnProperty(key)) {
+                            data[key] = generateData(value[key]);
+                        }
+                    }
                     break;
+                case 'string':
+                    data = Mock.Random.string('lower',1,10)
+                        + Mock.Random.string('number',1,3)
+                        + Mock.Random.string('lower',1,10);
+                    break;
+                case 'int':
+                    data = Mock.Random.integer(1, 100);
+                    break;
+                case 'array':
+                    data = [];
+                    var size = Mock.Random.integer(5, 1000);
+                    for (var i = 0; i < size; i++) {
+                        data.push(generateData(returnValue.value));
+                    }
+                    break;
+
             }
 
             return data;
