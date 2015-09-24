@@ -17,13 +17,28 @@
 		</div>
 		<div id="jsoneditor"></div>
 	</div>
-	<div class="pure-u-1-2"><p>Thirds</p></div>
+	<div class="pure-u-1-2">
+		<div id="api-shape-list">
+
+		</div>
+	</div>
 </div>
 
-
+<script type="text/juicer" id="template">
+	<div class="shape-item">
+		<h3>${key}</h3>
+		<h4>描述</h4>
+		<p>${data.description}</p>
+		<h4>地址</h4>
+		<p>${data.url}</p>
+		<h4>方法类型</h4>
+		<p>${data.method}</p>
+	</div>
+</script>
 
 <script type="text/javascript" src="/jquery/dist/jquery.js"></script>
 <script src="/jsoneditor/dist/jsoneditor.min.js"></script>
+<script src="/juicer/juicer-min.js"></script>
 <script type="text/javascript" src="/js/app.js"></script>
 
 <script>

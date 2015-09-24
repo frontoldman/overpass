@@ -2,8 +2,11 @@
     // create the editor
     var app = window.app || {};
 
+    var apiQ = getApi();
+
     initEditor();
     initSave();
+    initApiShape();
 
     //初始化json编辑器
     function initEditor() {
@@ -27,13 +30,32 @@
             editor.setMode(modes[mode]);
         };
 
-        getApi().done(function (data) {
+        apiQ.done(function (data) {
             editor.set(data);
         });
 
 
         app.editor = editor;
         //return editor;
+    }
+
+    function initApiShape(){
+        var template = $('#template').html();
+        var shapeContent = $('#api-shape-list');
+
+        apiQ.done(function (data) {
+            console.log(data);
+
+            var html = '';
+            for(var key in data){
+                html += juicer(template,{
+                    data:data[key],
+                    key:key
+                });
+            }
+
+            shapeContent.append(html);
+        });
     }
 
     //获取数据
@@ -45,6 +67,7 @@
     }
 
     function initSave() {
+
         var editor = app.editor;
         var $saveBtn = $('#save');
         $saveBtn.on('click', function () {
